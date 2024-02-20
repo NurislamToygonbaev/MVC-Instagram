@@ -1,4 +1,4 @@
-package peaksoft.config;
+package instagram.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

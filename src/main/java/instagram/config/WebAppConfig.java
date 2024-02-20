@@ -1,4 +1,4 @@
-package peaksoft.config;
+package instagram.config;
 
 
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 @Configuration
 @EnableWebMvc
-@ComponentScan("peaksoft")
+@ComponentScan("instagram")
 @RequiredArgsConstructor
 public class WebAppConfig implements WebMvcConfigurer {
 

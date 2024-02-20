@@ -1,4 +1,4 @@
-package peaksoft.config;
+package instagram.config;
 
 
 import jakarta.persistence.EntityManager;
@@ -20,7 +20,7 @@ import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "peaksoft")
+@ComponentScan(basePackages = "instagram")
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
 public class HibernateConfig {
