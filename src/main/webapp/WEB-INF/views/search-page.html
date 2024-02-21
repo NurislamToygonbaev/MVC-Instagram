@@ -372,8 +372,8 @@
                     <div class="profile-info">
                         <h2 th:text="${currentUser.userName}"></h2>
                         <div class="edit-profile">
-                            <form th:action="@{/addSubscriber}" method="post">
-                                <input type="hidden" th:name="subscriberId">
+                            <form th:action="@{/search/addSubscriber}" method="post">
+                                <input type="hidden" name="subscriberId" th:value="${currentUser.getFollower().getId()}">
                                 <button type="submit">Subscribe</button>
                             </form>
                         </div>

@@ -60,4 +60,19 @@ public class UserServiceImpl implements UserService {
     public void deleteUserById(Long userId){
         userRepo.deleteUserById(userId);
     }
+
+    @Override
+    public User findUserById(Long userId) {
+       return userRepo.findUserById(userId);
+    }
+
+    @Override
+    public User getUser(Long userId) throws MyException {
+        for (User allUser : findAllUsers()) {
+            if (allUser.getId().equals(userId)){
+                return allUser;
+            }
+        }
+        throw new MyException();
+    }
 }

@@ -18,16 +18,16 @@ public class SearchController {
     private final FollowerService followerService;
 
     @GetMapping("/createSearch")
-    public String createSearch(Model model){
+    public String createSearch(Model model) {
         model.addAttribute("userName", new User());
         return "search-page";
     }
 
     @PostMapping("/mSearch")
     public String pageTOSearch(@ModelAttribute("userName") User user,
-                               Model model){
+                               Model model) {
         try {
-           User findUser = userService.findUserByUserName(user);
+            User findUser = userService.findUserByUserName(user);
             model.addAttribute("currentUser", findUser);
             return "search-page";
         } catch (MyException e) {
@@ -36,7 +36,7 @@ public class SearchController {
     }
 
     @PostMapping("/addSubscriber")
-    public String addSubscriber(@RequestParam("subscriberId") Long subscriberId) {
+    public String addSubscriber(@RequestParam Long subscriberId) {
         Long userId = getCurrentUserId();
         followerService.addSubscriber(userId, subscriberId);
         return "redirect:/home/profUser";

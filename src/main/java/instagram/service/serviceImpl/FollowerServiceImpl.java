@@ -1,17 +1,21 @@
 package instagram.service.serviceImpl;
 
 import instagram.entity.Follower;
+import instagram.entity.User;
+import instagram.exception.MyException;
 import instagram.repository.FollowerRepo;
 import instagram.service.FollowerService;
+import instagram.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class FollowerServiceImpl implements FollowerService {
-
+    private final UserService userService;
     private final FollowerRepo followerRepo;
 
     @Override
@@ -26,13 +30,19 @@ public class FollowerServiceImpl implements FollowerService {
     }
     @Override
     public void addSubscriber(Long userId, Long subscriberId) {
-        Follower follower = followerRepo.findByUserId(userId);
+        User user = userService.findUserById(userId);
+//        User subscriber = userService.getUser(subscriberId);
+//        subscriber.getFollower().setSubscriptions(new ArrayList<>());
+        Follower follower = user.getFollower();
 
-        List<Long> subscribers = follower.getSubscribers();
-        if (!subscribers.contains(subscriberId)) {
-            subscribers.add(subscriberId);
-            follower.setSubscribers(subscribers);
-            followerRepo.save(follower);
+        if (follower != null) {
+            List<Long> subscribers = follower.getSubscribers();
+            if (!subscribers.contains(subscriberId)) {
+                subscribers.add(subscriberId);
+                followerRepo.save(follower);
+//                subscriber.getFollower().getSubscriptions().add(user.getId());
+            }
         }
     }
+
 }

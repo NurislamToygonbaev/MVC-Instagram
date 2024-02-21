@@ -64,4 +64,9 @@ public class UserRepository implements UserRepo {
         entityManager.remove(entityManager.find(User.class, userId));
     }
 
+    @Override
+    public User findUserById(Long userId) {
+        return entityManager.find(User.class, userId);
+    }
+
 }

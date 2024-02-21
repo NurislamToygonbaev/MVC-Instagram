@@ -1,5 +1,7 @@
 package instagram.service;
 
+import instagram.exception.MyException;
+
 public interface FollowerService {
     int getNumberOfSubscribers(Long userId);
     int getNumberOfSubscriptions(Long userId);

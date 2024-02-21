@@ -82,10 +82,18 @@ public class PostController {
     @GetMapping("/deletePost/{postId}")
     public String deletePost(@PathVariable Long postId){
         try {
-            postService.deletePostById(postId);
-            return "redirect:/home/profUser";
+            User user = userService.findUser();
+            List<Post> posts = user.getPosts();
+            for (Post post : posts) {
+                if (post.getId().equals(postId)){
+                    postService.deletePostById(postId);
+                    posts.remove(post);
+                    break;
+                }
+            }
         } catch (MyException e) {
             return "error-page";
         }
+        return "redirect:/home/profUser";
     }
 }

@@ -15,4 +15,7 @@ public interface UserRepo {
     User findUserByUserName(User user);
 
     void deleteUserById(Long userId);
+
+    User findUserById(Long userId);
+
 }

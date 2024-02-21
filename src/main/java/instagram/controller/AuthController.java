@@ -56,10 +56,29 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/delUserWIthPass/{userId}")
+    public String passwordForDelete(@PathVariable Long userId,
+                                    Model model){
+        try {
+            User findUser = userService.getUser(userId);
+            model.addAttribute("curUser", findUser);
+            model.addAttribute("passwordForDelete", new User());
+            return "deleteUser-page";
+        } catch (MyException e) {
+            return "error-page";
+        }
+    }
+
     @GetMapping("/deleteUser/{userId}")
-    public String deleteUserById(@PathVariable Long userId) {
-        userService.deleteUserById(userId);
-        return "redirect:/reg/page";
+    public String deleteUserById(@PathVariable Long userId,
+                                 @ModelAttribute("passwordForDelete") User user) {
+        User currentUser = userService.findUser();
+        if (currentUser.getPassword().equals(user.getPassword())){
+            userService.deleteUserById(userId);
+            return "redirect:/reg/page";
+        }else {
+            return "error-page";
+        }
     }
 }
 

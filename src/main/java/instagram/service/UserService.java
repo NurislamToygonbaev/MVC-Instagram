@@ -15,4 +15,9 @@ public interface UserService {
     User findUserByUserName(User user) throws MyException;
 
     void deleteUserById(Long userId);
+
+    User findUserById(Long userId) ;
+
+    User getUser(Long subId) throws MyException;
+
 }
