@@ -3,6 +3,9 @@ package instagram.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "likes")
 @Getter
@@ -16,12 +19,7 @@ public class Like {
     @SequenceGenerator(name = "like_gen", sequenceName = "like_seq", allocationSize = 1)
     private Long id;
     @Column(name = "is_like")
-    private Boolean isLike = false;
 
-    @OneToOne
-    private User user;
-
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    private Post post;
-
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<Long> isLikes = new ArrayList<>();
 }

@@ -1,6 +1,7 @@
 package instagram.repository.impl;
 
 import instagram.entity.Follower;
+import instagram.entity.User;
 import instagram.repository.FollowerRepo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -35,6 +36,11 @@ public class FollowerRepository implements FollowerRepo {
                         " where u.id =:userId", Follower.class)
                 .setParameter("userId", userId)
                 .getSingleResult();
+    }
+
+    @Override
+    public User findUserById(Long currentUserId) {
+        return entityManager.find(User.class, currentUserId);
     }
 
 }

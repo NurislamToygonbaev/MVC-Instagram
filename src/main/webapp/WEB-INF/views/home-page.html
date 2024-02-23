@@ -58,7 +58,7 @@
         }
 
         .content {
-            margin-left: 250px;
+            margin-left: 400px;
             padding: 20px;
             display: flex;
             justify-content: center;
@@ -214,11 +214,14 @@
                     <h3 th:text="${post.title}"></h3>
                     <p th:text="${post.description}"></p>
                     <p th:text="${post.createAt}"></p>
-                    <div class="interaction" th:each="lik : ${post.likes}">
-                        <button class="like-btn" onclick="toggleLike(this)" th:field="${lik.isLike}">
-                            <i class="far fa-heart"></i>
-                            <span class="like-count">0</span>
-                        </button>
+                    <div class="interaction">
+                        <form class="like-btn" th:action="@{/posts/likes/{postId}(postId=${post.getId()})}"
+                            onclick="toggleLike(this)" th:method="get">
+                            <button type="submit">
+                                <i class="far fa-heart"></i>
+                                <span class="like-count" th:text="${post.like.isLikes.size()}"></span>
+                            </button>
+                        </form>
                         <a href="#" th:href="@{/posts/viewComment/{postId}(postId=${post.getId()})}" class="comment-link">View Comments</a>                    </div>
                 </div>
             </div>
@@ -270,20 +273,21 @@
             likeCountValue = 0;
         }
 
-        var isLiked = likeIcon.classList.contains('fas'); // Проверяем класс 'fas', так как 'far' используется для пустой иконки
+        var isLiked = likeIcon.classList.contains('fas');
 
         if (!isLiked) {
             likeIcon.classList.remove('far');
             likeIcon.classList.add('fas');
-            likeIcon.style.color = 'red'; // Устанавливаем красный цвет
+            likeIcon.style.color = 'red';
             likeCountSpan.textContent = likeCountValue + 1;
         } else {
             likeIcon.classList.remove('fas');
             likeIcon.classList.add('far');
-            likeIcon.style.color = ''; // Возвращаем цвет по умолчанию
+            likeIcon.style.color = '';
             likeCountSpan.textContent = likeCountValue - 1;
         }
     }
+
 </script>
 </body>
 </html>

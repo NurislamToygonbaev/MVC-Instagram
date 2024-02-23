@@ -5,6 +5,7 @@ import instagram.exception.MyException;
 import instagram.repository.PostRepo;
 import instagram.service.PostService;
 import instagram.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +25,8 @@ public class PostServiceImpl implements PostService {
     @Override
     public void createPost(Post newPOst) throws MyException {
         if (newPOst.getImage() != null){
-            Comment comment = new Comment();
             Like like = new Like();
-            comment.setPost(newPOst);
-            newPOst.getComments().add(comment);
-            like.setPost(newPOst);
-            newPOst.getLikes().add(like);
+            newPOst.setLike(like);
             newPOst.setCreateAt(ZonedDateTime.now().toLocalDate());
             User user = userService.findUser();
             user.getPosts().add(newPOst);
@@ -59,12 +56,26 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePostById(Long postId) throws MyException {
-        Post findPost = findById(postId);
-        if(findPost != null){
-            postRepo.deletePostById(postId);
+    public void deletePostById(Long postId) {
+        postRepo.deletePostById(postId);
+    }
+
+    @Override
+    @Transactional
+    public void getLikePost(Long currentUserId, Long postId) {
+        Post post = postRepo.findById(postId);
+
+        List<Long> isLikes = post.getLike().getIsLikes();
+        if (isLikes.contains(currentUserId)){
+            isLikes.remove(currentUserId);
         }else {
-            throw new MyException();
+            isLikes.add(currentUserId);
         }
+    }
+
+    @Override
+    public int getNumberOfLikes(Long userId, Long postId) {
+        Like like = postRepo.findPost(postId);
+        return like.getIsLikes().isEmpty() ? 0 : like.getIsLikes().size();
     }
 }

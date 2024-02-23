@@ -6,6 +6,7 @@ import instagram.exception.MyException;
 import instagram.repository.FollowerRepo;
 import instagram.service.FollowerService;
 import instagram.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,24 +24,32 @@ public class FollowerServiceImpl implements FollowerService {
         Follower follower = followerRepo.findById(userId);
         return follower.getSubscribers().isEmpty() ? 0 : follower.getSubscribers().size();
     }
+
     @Override
     public int getNumberOfSubscriptions(Long userId) {
         Follower follower = followerRepo.findById(userId);
         return follower.getSubscriptions().isEmpty() ? 0 : follower.getSubscriptions().size();
     }
-    @Override
-    public void addSubscriber(Long userId, Long subscriberId) {
-        User user = userService.findUserById(userId);
-//        User subscriber = userService.getUser(subscriberId);
-//        subscriber.getFollower().setSubscriptions(new ArrayList<>());
-        Follower follower = user.getFollower();
 
-        if (follower != null) {
-            List<Long> subscribers = follower.getSubscribers();
-            if (!subscribers.contains(subscriberId)) {
-                subscribers.add(subscriberId);
-                followerRepo.save(follower);
-//                subscriber.getFollower().getSubscriptions().add(user.getId());
+    @Transactional
+    @Override
+    public void addSubscriber(Long currentUserId, Long subscriberId) {
+        User currentUser = followerRepo.findUserById(currentUserId);
+        User subscriberUser = followerRepo.findUserById(subscriberId);
+
+        if (currentUser != null && subscriberUser != null) {
+            Follower currentUserFollower = currentUser.getFollower();
+            Follower subscriberFollower = subscriberUser.getFollower();
+
+            List<Long> currentUserSubscriptions = currentUserFollower.getSubscriptions();
+            List<Long> subscriberSubscribers = subscriberFollower.getSubscribers();
+
+            if (currentUserSubscriptions.contains(subscriberId)) {
+                currentUserSubscriptions.remove(subscriberId);
+                subscriberSubscribers.remove(currentUserId);
+            } else {
+                currentUserSubscriptions.add(subscriberId);
+                subscriberSubscribers.add(currentUserId);
             }
         }
     }

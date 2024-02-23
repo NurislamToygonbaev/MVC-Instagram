@@ -15,30 +15,53 @@
             background-color: #fafafa;
         }
 
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        header {
+            background-color: #fff;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .posts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Центрирование по горизонтали */
+        }
+
         .post {
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            overflow: hidden;
+            width: 800px; /* Установка ширины поста */
+            margin: 20px; /* Отступы между постами */
+            padding: 20px; /* Добавляем внутренние отступы для поста */
+            background-color: #fff; /* Цвет фона поста */
+            border-radius: 10px; /* Закругляем углы поста */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Добавляем тень для эффекта поднятия */
+            text-align: center; /* Центрирование содержимого по горизонтали */
         }
 
         .post img {
-            width: 100%;
+            max-width: 100%;
             height: auto;
-            display: block;
+            border-radius: 5px;
         }
 
-        .post-content {
-            padding: 10px;
-        }
-
-        .post-content h3 {
-            margin-top: 0;
-            font-size: 18px;
-        }
-
-        .post-content p {
-            margin-bottom: 10px;
+        footer {
+            background-color: #ffffff;
+            border-top: 1px solid #dbdbdb;
+            padding: 12px 24px;
+            text-align: center;
         }
 
         .interaction {
@@ -168,11 +191,6 @@
             padding: 20px;
         }
 
-        .user-profile {
-            display: flex;
-            align-items: center;
-            margin-bottom: 40px;
-        }
 
         .user-profile img {
             width: 150px;
@@ -180,11 +198,6 @@
             border-radius: 50%;
             margin-right: 40px;
             border: 3px solid #dbdbdb;
-        }
-
-        .profile-info {
-            display: flex;
-            align-items: center;
         }
 
         .profile-info h2 {
@@ -205,20 +218,9 @@
             background-color: #dbdbdb;
         }
 
-        .stats {
-            display: flex;
-            margin-bottom: 10px;
-        }
-
         .stats p {
             margin-right: 20px;
             font-size: 16px;
-        }
-
-        .posts {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            grid-gap: 20px;
         }
 
         .post {
@@ -260,6 +262,116 @@
             margin-right: 10px;
         }
 
+        .comment-section {
+            display: flex;
+            flex-direction: column; /* Изменено на column */
+        }
+
+        .comment-section > div {
+            margin-bottom: 10px; /* Добавлено для разделения комментариев */
+        }
+
+
+        .post {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .post img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .post-content {
+            padding: 10px;
+        }
+
+        .post-content h3 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .post-content p {
+            margin-bottom: 10px;
+        }
+
+        .interaction {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .like-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            color: #333;
+        }
+
+        .like-btn i {
+            margin-right: 5px;
+        }
+
+        .comment-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .comment-link:hover {
+            color: #555;
+        }
+
+
+
+        /* Стили для контейнера комментариев */
+        .container_coments {
+            margin-bottom: 20px; /* Отступ между контейнерами комментариев */
+        }
+
+        /* Стили для каждого комментария */
+        .container_coments p {
+            margin: 0; /* Убираем отступы для абзацев в контейнере комментариев */
+            font-size: 14px; /* Размер шрифта комментария */
+            line-height: 1.4; /* Межстрочный интервал */
+        }
+
+        /* Стили для формы добавления комментария */
+        form {
+            margin-top: 20px; /* Отступ сверху формы */
+        }
+
+        label {
+            display: block; /* Отображаем метку как блочный элемент */
+            margin-bottom: 5px; /* Отступ между меткой и полем ввода */
+        }
+
+        input[type="text"] {
+            width: 100%; /* Ширина поля ввода */
+            padding: 8px; /* Отступы внутри поля ввода */
+            margin-bottom: 10px; /* Отступ снизу поля ввода */
+            border-radius: 5px; /* Скругление углов поля ввода */
+            border: 1px solid #ddd; /* Граница поля ввода */
+        }
+
+        .comment-submit {
+            background-color: #3897f0; /* Цвет кнопки отправки комментария */
+            color: #fff; /* Цвет текста на кнопке */
+            padding: 8px 16px; /* Отступы внутри кнопки */
+            border: none; /* Убираем границу кнопки */
+            border-radius: 5px; /* Скругление углов кнопки */
+            cursor: pointer; /* Указатель при наведении на кнопку */
+        }
+
+        .comment-submit:hover {
+            background-color: #3578e5; /* Цвет кнопки при наведении */
+        }
+
 
     </style>
 </head>
@@ -281,42 +393,37 @@
                 </li>
                 <li class="menu-item"><a href="#" th:href="@{/home/profUser}"><i class="fas fa-user"></i> Profile</a>
                 </li>
-                <li class="menu-item"><a href="#" th:href="@{/reg/page}"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+                <li class="menu-item"><a href="#" th:href="@{/reg/page}"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                </li>
             </ul>
         </nav>
     </div>
 
     <main class="content" th:object="${findPost}">
-        <h2 style="margin-top: 40px;">Posts</h2>
-        <div class="post">
-            <img th:src="${findPost.getImage().getImageURL()}" alt="Post Image">
-            <div class="post-content">
-                <h3 th:text="${findPost.getTitle()}"></h3>
-                <p th:text="${findPost.getDescription()}"></p>
-                <p th:text="${findPost.createAt}"></p>
-                <div class="interaction" th:each="lik : ${findPost.likes}">
-                    <button class="like-btn" onclick="toggleLike(this)" th:field="${lik.isLike}">
-                        <i class="far fa-heart"></i>
-                        <span class="like-count">0</span>
-                    </button>
+        <div class="posts">
+            <div class="post">
+                <img th:src="${findPost.getImage().getImageURL()}" alt="Post Image">
+                <div class="post-content">
+                    <h3 th:text="${findPost.getTitle()}"></h3>
+                    <p th:text="${findPost.getDescription()}"></p>
+                    <p th:text="${findPost.createAt}"></p>
+
+                    <div class="container_coments" th:each="comment : ${findPost.getComments()}">
+                        <p th:text="${comment.comment}"></p>
+                        <p th:text="${comment.createAt}"></p>
+                    </div>
+                    <form action="#" th:action="@{/posts/savedComment/{postId}(postId=${findPost.getId()})}"
+                          th:object="${newComment}" method="post">
+                        <label for="comment">Comment:</label>
+                        <input type="text" th:field="*{comment}" id="comment" name="comment" required minlength="5"
+                               maxlength="20"
+                               placeholder="Enter your comment">
+                        <button type="submit" class="comment-submit">Submit</button>
+                    </form>
                 </div>
             </div>
-            <div th:each="commont : ${findPost.getComments()}">
-<!--                <h3 th:text="${commont.getUser().getUserName()}"></h3>-->
-                <h3 th:text="${commont.comment}"></h3>
-                <h4 th:text="${commont.createAt}"></h4>
-            </div>
         </div>
-
-        <form action="#" th:action="@{/posts/savedComment/{postId}(postId=${postId})}" th:object="${newComment}" method="post">
-            <label for="comment">Comment:</label>
-            <input type="text" th:field="*{comment}" id="comment" name="comment" required minlength="5" maxlength="20"
-                   placeholder="Enter your comment">
-            <button type="submit">Submit</button>
-        </form>
     </main>
-
-
 
 
 </div>
@@ -328,54 +435,6 @@
 <script>
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-    document.getElementById('searchInput').addEventListener('input', function () {
-        let searchQuery = this.value.toLowerCase();
-        let searchResultsHTML = '';
-
-        // Пример результатов поиска
-        const users = [
-            {username: 'user1', photo: 'user1.jpg'},
-            {username: 'user2', photo: 'user2.jpg'},
-            {username: 'user3', photo: 'user3.jpg'}
-        ];
-
-        users.forEach(user => {
-            if (user.username.toLowerCase().includes(searchQuery)) {
-                searchResultsHTML += `<div><img src="${user.photo}" alt="${user.username}"><p>${user.username}</p></div>`;
-            }
-        });
-
-        document.getElementById('searchResults').innerHTML = searchResultsHTML;
-        document.getElementById('searchModal').style.display = 'block';
-    });
-
-    document.querySelector('.close').addEventListener('click', function () {
-        document.getElementById('searchModal').style.display = 'none';
-    });
-
-    // function toggleLike(button) {
-    //     var likeIcon = button.querySelector('i');
-    //     var likeCountSpan = button.querySelector('.like-count');
-    //
-    //     var likeCountValue = parseInt(likeCountSpan.textContent);
-    //     if (isNaN(likeCountValue)) {
-    //         likeCountValue = 0;
-    //     }
-    //
-    //     var isLiked = likeIcon.classList.contains('fas'); // Проверяем класс 'fas', так как 'far' используется для пустой иконки
-    //
-    //     if (!isLiked) {
-    //         likeIcon.classList.remove('far');
-    //         likeIcon.classList.add('fas');
-    //         likeIcon.style.color = 'red'; // Устанавливаем красный цвет
-    //         likeCountSpan.textContent = likeCountValue + 1;
-    //     } else {
-    //         likeIcon.classList.remove('fas');
-    //         likeIcon.classList.add('far');
-    //         likeIcon.style.color = ''; // Возвращаем цвет по умолчанию
-    //         likeCountSpan.textContent = likeCountValue - 1;
-    //     }
-    // }
 </script>
 </body>
 </html>

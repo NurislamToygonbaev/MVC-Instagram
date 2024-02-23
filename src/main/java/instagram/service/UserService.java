@@ -12,7 +12,7 @@ public interface UserService {
 
     User findUser();
 
-    User findUserByUserName(User user) throws MyException;
+    List<User> findUserByUserName(String keyword) throws MyException;
 
     void deleteUserById(Long userId);
 

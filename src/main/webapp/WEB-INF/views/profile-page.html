@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -282,7 +282,7 @@
         </nav>
     </div>
 
-    <main class="content" th:object="${currentUser}">
+    <main class="content">
         <div class="user-profile">
             <img th:src="${currentUser.getUserInfo().getImage()}" alt="Profile Picture">
             <div>
@@ -293,37 +293,45 @@
                     </div>
                 </div>
                 <div class="stats">
-                    <p> Posts: <span  th:text="${currentUser.getPosts().size()}"></span></p>
-                    <p><a href="#"> Followers: <span th:text="${currentUser.getFollower().getSubscribers().size()}"></span></a></p>
-                    <P><a href="#"> Following: <span th:text="${currentUser.getFollower().getSubscriptions().size()}"></span></a></P>
+                    <p> Posts: <span th:text="${currentUser.getPosts().size()}"></span></p>
+                    <p><a href="#"> Followers: <span th:text="${subscribers}"></span></a></p>
+                    <P><a href="#"> Following: <span th:text="${subscriptions}"></span></a></P>
                 </div>
                 <p th:text="${currentUser.userInfo.fullName}"></p>
                 <p th:text="${currentUser.userInfo.biography}"></p>
             </div>
         </div>
         <h2 style="margin-top: 40px;">Posts</h2>
+        <!-- Цикл по постам пользователя -->
         <div class="post" th:each="post : ${currentUser.getPosts().reversed()}">
             <img th:src="${post.getImage().getImageURL()}" alt="Post Image">
             <div class="post-content">
                 <h3 th:text="${post.title}"></h3>
                 <p th:text="${post.description}"></p>
                 <p th:text="${post.createAt}"></p>
-                <div class="interaction" th:each="lik : ${post.likes}">
-                    <button class="like-btn" onclick="toggleLike(this)" th:field="${lik.isLike}">
-                        <i class="far fa-heart"></i>
-                        <span class="like-count">0</span>
-                    </button>
+                <div class="interaction">
+                    <!-- Иконка и количество лайков -->
+                    <form class="like-btn" th:action="@{/home/like/{postId}(postId=${post.getId()})}"
+                          onclick="toggleLike(this)" th:method="get">
+                        <button type="submit">
+                            <i class="far fa-heart"></i>
+                            <span class="like-count" th:text="${post.like.isLikes.size()}"></span>
+                        </button>
+                    </form>
+                    <!-- Ссылка на просмотр комментариев -->
                     <a href="#" th:href="@{/posts/viewComment/{postId}(postId=${post.getId()})}" class="comment-link">View Comments</a>
+                    <!-- Ссылка на редактирование поста -->
                     <a href="#" th:href="@{/posts/editPost/{postId}(postId=${post.getId()})}" class="comment-link">Edit post</a>
-                    <form th:action="@{/posts/deletePost/{postId}(postId=${post.getId()})}" th:method="GET">
+                    <!-- Форма для удаления поста -->
+                    <form th:action="@{/posts/deletePost/{postId}(postId=${post.getId()})}" th:method="get" onsubmit="return confirm('Are you sure you want to delete this post?');">
                         <button type="submit" class="comment-link">Delete post</button>
                     </form>
                 </div>
             </div>
         </div>
-
-
     </main>
+
+
 </div>
 
 <footer>
@@ -358,30 +366,6 @@
         document.getElementById('searchModal').style.display = 'none';
     });
 
-
-    function toggleLike(button) {
-        var likeIcon = button.querySelector('i');
-        var likeCountSpan = button.querySelector('.like-count');
-
-        var likeCountValue = parseInt(likeCountSpan.textContent);
-        if (isNaN(likeCountValue)) {
-            likeCountValue = 0;
-        }
-
-        var isLiked = likeIcon.classList.contains('fas'); // Проверяем класс 'fas', так как 'far' используется для пустой иконки
-
-        if (!isLiked) {
-            likeIcon.classList.remove('far');
-            likeIcon.classList.add('fas');
-            likeIcon.style.color = 'red'; // Устанавливаем красный цвет
-            likeCountSpan.textContent = likeCountValue + 1;
-        } else {
-            likeIcon.classList.remove('fas');
-            likeIcon.classList.add('far');
-            likeIcon.style.color = ''; // Возвращаем цвет по умолчанию
-            likeCountSpan.textContent = likeCountValue - 1;
-        }
-    }
 
 </script>
 </body>

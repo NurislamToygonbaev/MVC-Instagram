@@ -46,14 +46,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByUserName(User user) throws MyException {
-        List<User> allUsers = userRepo.findAllUsers();
-        for (User allUser : allUsers) {
-            if (allUser.getUserName().equalsIgnoreCase(user.getUserName())){
-               return userRepo.findUserByUserName(user);
+    public List<User> findUserByUserName(String keyword) throws MyException {
+        List<User> users = userRepo.searchUsers("%"+keyword+"%");
+        for (User user : users) {
+            if (user.getUserName().equalsIgnoreCase(cerruntUser.getUserName())){
+                throw new MyException();
             }
         }
-        throw new MyException();
+        return users;
     }
 
     @Override

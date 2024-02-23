@@ -24,4 +24,9 @@ public class CommentRepository implements CommentRepo {
         post.getComments().add(comment);
         entityManager.persist(comment);
     }
+
+    @Override
+    public void deleteComment(Long comId) {
+        entityManager.remove(entityManager.find(Comment.class, comId));
+    }
 }

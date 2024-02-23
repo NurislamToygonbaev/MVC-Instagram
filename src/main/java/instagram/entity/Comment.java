@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.*;
@@ -31,6 +32,6 @@ public class Comment{
     @ManyToOne
     private Post post;
 
-    @OneToMany(cascade = {MERGE, PERSIST, REMOVE}, fetch = FetchType.EAGER)
-    private List<Like> like;
+    @OneToMany
+    private List<Like> likes = new ArrayList<>();
 }

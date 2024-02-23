@@ -25,6 +25,6 @@ public class Image{
     @OneToMany(cascade = {REMOVE})
     private List<User> users;
 
-    @OneToOne(cascade = {REMOVE})
+    @OneToOne
     private Post post;
 }

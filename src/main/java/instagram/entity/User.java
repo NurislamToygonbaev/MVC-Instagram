@@ -35,13 +35,8 @@ public class User {
     private Follower follower;
 
     @OneToMany(mappedBy = "user", cascade = {REMOVE, PERSIST}, fetch = FetchType.EAGER)
-    @OrderBy("createAt desc")
     private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {REMOVE})
     private List<Comment> comments = new ArrayList<>();
-
-    @OneToOne(mappedBy = "user", cascade = {REMOVE})
-    private Like like;
-
 }

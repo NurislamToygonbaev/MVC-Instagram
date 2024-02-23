@@ -12,10 +12,9 @@ public interface UserRepo {
 
     User findUser(User currentUser);
 
-    User findUserByUserName(User user);
-
     void deleteUserById(Long userId);
 
     User findUserById(Long userId);
 
+    List<User> searchUsers(String keyword);
 }

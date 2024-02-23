@@ -1,5 +1,6 @@
 package instagram.repository.impl;
 
+import instagram.entity.Like;
 import instagram.entity.Post;
 import instagram.entity.User;
 import instagram.repository.PostRepo;
@@ -20,7 +21,7 @@ public class PostRepository implements PostRepo {
     private final EntityManager entityManager;
     @Override
     public void createPost(Post newPOst) {
-        entityManager.persist(newPOst);
+        entityManager.merge(newPOst);
     }
 
     @Override
@@ -44,5 +45,13 @@ public class PostRepository implements PostRepo {
     @Override
     public void deletePostById(Long postId) {
         entityManager.remove(entityManager.find(Post.class, postId));
+    }
+
+    @Override
+    public Like findPost(Long postId) {
+        return entityManager.createQuery("select p.like from Post p where p.id =:postId", Like.class)
+                .setParameter("postId", postId)
+                .getSingleResult();
+
     }
 }

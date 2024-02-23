@@ -52,14 +52,6 @@ public class UserRepository implements UserRepo {
     }
 
     @Override
-    public User findUserByUserName(User user) {
-        return entityManager.createQuery("select u from User u " +
-                        " where u.userName = :userName", User.class)
-                .setParameter("userName", user.getUserName())
-                .getSingleResult();
-    }
-
-    @Override
     public void deleteUserById(Long userId) {
         entityManager.remove(entityManager.find(User.class, userId));
     }
@@ -67,6 +59,18 @@ public class UserRepository implements UserRepo {
     @Override
     public User findUserById(Long userId) {
         return entityManager.find(User.class, userId);
+    }
+
+    @Override
+    public List<User> searchUsers(String keyword) {
+        return entityManager.createQuery("""
+                select u from User u
+                where u.userName ilike (:keyword)
+                or u.email ilike (:keyword)
+                or u.userInfo.fullName ilike (:keyword)
+                """, User.class)
+                .setParameter("keyword", keyword)
+                .getResultList();
     }
 
 }

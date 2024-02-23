@@ -25,4 +25,9 @@ public class CommentServiceImpl implements CommentService {
         comment.setUser(currentUser);
         commentRepo.saveComment(postId, comment);
     }
+
+    @Override
+    public void deleteComment(Long comId) {
+        commentRepo.deleteComment(comId);
+    }
 }

@@ -3,7 +3,6 @@ package instagram.controller;
 import instagram.entity.User;
 import instagram.exception.MyException;
 import instagram.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -58,7 +57,7 @@ public class AuthController {
 
     @GetMapping("/delUserWIthPass/{userId}")
     public String passwordForDelete(@PathVariable Long userId,
-                                    Model model){
+                                    Model model) {
         try {
             User findUser = userService.getUser(userId);
             model.addAttribute("curUser", findUser);
@@ -73,10 +72,10 @@ public class AuthController {
     public String deleteUserById(@PathVariable Long userId,
                                  @ModelAttribute("passwordForDelete") User user) {
         User currentUser = userService.findUser();
-        if (currentUser.getPassword().equals(user.getPassword())){
+        if (currentUser.getPassword().equals(user.getPassword())) {
             userService.deleteUserById(userId);
             return "redirect:/reg/page";
-        }else {
+        } else {
             return "error-page";
         }
     }

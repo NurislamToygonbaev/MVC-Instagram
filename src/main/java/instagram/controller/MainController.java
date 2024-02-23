@@ -30,12 +30,9 @@ public class MainController {
     private final PostService postService;
     private final FollowerService followerService;
 
-
     @GetMapping("/main")
     public String mainPage(Model model){
         List<Post> allPosts = postService.findAllPosts();
-        List<User> allUsers = userService.findAllUsers();
-        model.addAttribute("allUsers", allUsers);
         model.addAttribute("allPosts", allPosts);
         return "home-page";
     }
@@ -71,6 +68,16 @@ public class MainController {
         }
     }
 
+    @GetMapping("/like/{postId}")
+    public String Like(@PathVariable Long postId){
+        Long currentUserId = getCurrentUserId();
+        postService.getLikePost(currentUserId, postId);
+        postService.getNumberOfLikes(currentUserId, postId);
+        return "redirect:/home/profUser";
+    }
 
-
+    private Long getCurrentUserId() {
+        User user = userService.findUser();
+        return user.getId();
+    }
 }

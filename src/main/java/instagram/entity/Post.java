@@ -27,15 +27,15 @@ public class Post {
     @Column(name = "create_at")
     private LocalDate createAt;
 
-    @ManyToOne(cascade = {MERGE, REFRESH})
+    @ManyToOne(cascade = {DETACH})
     private User user;
 
     @OneToOne(mappedBy = "post", cascade = {PERSIST, MERGE, REFRESH, REMOVE})
     private Image image;
 
-    @OneToMany(mappedBy = "post", cascade = {REMOVE, PERSIST, MERGE, REFRESH}, fetch = FetchType.EAGER)
-    private List<Like> likes = new ArrayList<>();
+    @OneToOne(cascade = {REMOVE, PERSIST, MERGE})
+    private Like like;
 
-    @OneToMany(mappedBy = "post", cascade = {REMOVE, PERSIST, MERGE, REFRESH}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 }

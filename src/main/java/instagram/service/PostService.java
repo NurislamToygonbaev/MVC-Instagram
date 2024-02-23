@@ -14,6 +14,9 @@ public interface PostService {
 
     void updatePOst(Long postId, Post post);
 
-    void deletePostById(Long postId) throws MyException;
+    void deletePostById(Long postId);
 
+    void getLikePost(Long currentUserId, Long postId);
+
+    int getNumberOfLikes(Long userId, Long postId);
 }

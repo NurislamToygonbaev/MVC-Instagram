@@ -13,25 +13,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/posts")
 @RequiredArgsConstructor
+@RequestMapping("/posts")
 public class PostController {
 
     private final PostService postService;
     private final UserService userService;
     private final CommentService commentService;
+
     @GetMapping("/newPost")
-    public String createPost(Model model){
+    public String createPost(Model model) {
         Post post = new Post();
         Image image = new Image();
         model.addAttribute("post", post);
         model.addAttribute("image", image);
         return "new-post";
     }
+
     @PostMapping("/savePost")
     public String savePost(@ModelAttribute("post") Post post,
                            @ModelAttribute("image") Image image,
@@ -48,7 +49,7 @@ public class PostController {
     }
 
     @GetMapping("/viewComment/{postId}")
-    public String viewComment(Model model, @PathVariable Long postId){
+    public String viewComment(Model model, @PathVariable Long postId) {
         Post findPost = postService.findById(postId);
         model.addAttribute("findPost", findPost);
         model.addAttribute("newComment", new Comment());
@@ -58,14 +59,14 @@ public class PostController {
     @PostMapping("/savedComment/{postId}")
     public String savedComment(@PathVariable Long postId,
                                @ModelAttribute("newComment") Comment comment,
-                               Model model){
+                               Model model) {
         model.addAttribute("postId", postId);
         commentService.saveComment(postId, comment);
         return "redirect:/posts/viewComment/" + postId;
     }
 
     @GetMapping("/editPost/{postId}")
-    public String editPost(@PathVariable Long postId, Model model){
+    public String editPost(@PathVariable Long postId, Model model) {
         Post findPOst = postService.findById(postId);
         model.addAttribute("postGetId", postId);
         model.addAttribute("editPost", findPOst);
@@ -74,26 +75,33 @@ public class PostController {
 
     @PostMapping("/savePOstAfter/{postId}")
     public String savePostAfterEdit(@PathVariable Long postId,
-                                    @ModelAttribute("editPost") Post post){
+                                    @ModelAttribute("editPost") Post post) {
         postService.updatePOst(postId, post);
         return "redirect:/home/profUser";
     }
 
     @GetMapping("/deletePost/{postId}")
-    public String deletePost(@PathVariable Long postId){
-        try {
-            User user = userService.findUser();
-            List<Post> posts = user.getPosts();
-            for (Post post : posts) {
-                if (post.getId().equals(postId)){
-                    postService.deletePostById(postId);
-                    posts.remove(post);
-                    break;
-                }
-            }
-        } catch (MyException e) {
-            return "error-page";
-        }
+    public String deletePost(@PathVariable Long postId) {
+        postService.deletePostById(postId);
         return "redirect:/home/profUser";
+    }
+
+    @PostMapping("/deleteComment/{comId}")
+    public String deleteComment(@PathVariable Long comId){
+        commentService.deleteComment(comId);
+        return "comment-page";
+    }
+
+    @GetMapping("/likes/{postId}")
+    public String isLike(@PathVariable Long postId){
+        Long currentUserId = getCurrentUserId();
+        postService.getLikePost(currentUserId, postId);
+        postService.getNumberOfLikes(currentUserId, postId);
+        return "redirect:/home/main";
+    }
+
+    private Long getCurrentUserId() {
+        User user = userService.findUser();
+        return user.getId();
     }
 }

@@ -1,5 +1,6 @@
 package instagram.repository;
 
+import instagram.entity.Like;
 import instagram.entity.Post;
 import instagram.entity.User;
 
@@ -15,4 +16,6 @@ public interface PostRepo {
     void updatePOst(Long postId, Post post);
 
     void deletePostById(Long postId);
+
+    Like findPost(Long postId);
 }
